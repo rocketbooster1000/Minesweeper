@@ -45,5 +45,4 @@ public class ConsoleInOut implements InOut{
             return getInt(prompt);
         }
     }
-    
 }

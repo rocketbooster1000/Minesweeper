@@ -1,8 +1,6 @@
 package root.game;
 
-import root.common.Board;
-
-public abstract class MinesweeperBoard implements Board{
+public abstract class MinesweeperBoard {
     protected static final int MAX_COL = 10;
     protected static final int MAX_ROW = 10;
 
@@ -10,7 +8,7 @@ public abstract class MinesweeperBoard implements Board{
 
     protected Tile[][] board;
 
-    public void regenerate(){
+    public void initialize(){
         board = new Tile[MAX_ROW][MAX_COL];
 
         //initialize tiles
@@ -20,16 +18,52 @@ public abstract class MinesweeperBoard implements Board{
             }
         }
 
+        // //choose mine locations
+        // for (int p = 0; p < MINES; p++){
+        //     int i = 0, j = 0;
+        //     do {
+        //         i = (int)(MAX_ROW * Math.random());
+        //         j = (int)(MAX_COL * Math.random());
+        //     } while (board[i][j].getMines() == 1);
+        //     board[i][j].setAsMine();
+        // }
+
+        // //calculates neighbors
+        // for (int i = 0; i < MAX_ROW; i++){
+        //     for (int j = 0; j < MAX_COL; j++){
+        //         int mineNeighbors = 0;
+        //         for (int ri = -1; ri < 2; ri++){
+        //             for (int ji = -1; ji < 2; ji++){
+        //                 int r = ri + i;
+        //                 int c = ji + j;
+        //                 if (r >= 0 && r < MAX_ROW
+        //                     && c >= 0 && c < MAX_COL
+        //                     && !(r == i && c == j))
+        //                     mineNeighbors += board[r][c].getMines();
+        //             }
+        //         }
+        //         board[i][j].setMineNeighbors(mineNeighbors);
+        //     }
+        // }
+    }
+
+    public void generateMines(int nRow, int nCol){
         //choose mine locations
         for (int p = 0; p < MINES; p++){
             int i = 0, j = 0;
-            do {
+            while (true){
                 i = (int)(MAX_ROW * Math.random());
                 j = (int)(MAX_COL * Math.random());
-            } while (board[i][j].getMines() == 1);
-            board[i][j].setAsMine();
+                if (board[i][j].getMines() == 1 || (i == nRow && j == nCol)) continue;
+                board[i][j].setAsMine();
+                setMineNeighbors();
+                if (board[i][j].getMineNeighbors() > 0) continue;
+                break;
+            }
         }
+    }
 
+    private void setMineNeighbors(){
         //calculates neighbors
         for (int i = 0; i < MAX_ROW; i++){
             for (int j = 0; j < MAX_COL; j++){
@@ -65,17 +99,18 @@ public abstract class MinesweeperBoard implements Board{
 
         board[r][c].reveal();
         if (board[r][c].getMineNeighbors() == 0){
-            for (int rx = -1; rx < 2; rx ++){
-                for (int cx = -1; cx < 2; cx++){
-                    int ri = rx + r;
-                    int ci = cx + c;
-                    if (ri >= 0 && ri < MAX_ROW
-                            && ci >= 0 && ci < MAX_COL
-                            && !(ri == r && ci == c)
-                            && board[ri][ci].getMines() == 0){
-                                breakTile(ri, ci);
-                            }
-                }
+            for (int i = -1; i < 2; i++){
+                int ri = r + i;
+                if (ri >= 0 && ri < MAX_ROW
+                    && board[ri][c].getMines() == 0)
+                    breakTile(ri, c);
+            }
+            
+            for (int j = -1; j < 2; j++){
+                int cj = c + j;
+                if (cj >= 0 && cj < MAX_COL
+                    && board[r][cj].getMines() == 0)
+                    breakTile(r, cj);
             }
         }
         return false;
@@ -89,6 +124,14 @@ public abstract class MinesweeperBoard implements Board{
         }
         return true;
     }
+
+    public abstract void display();
+
+    public abstract void gameEndWin();
+
+    public abstract void gameEndLoose();
+
+    public abstract void end();
 
     public String toString(){
         String str = "";
@@ -136,6 +179,10 @@ public abstract class MinesweeperBoard implements Board{
 
         public void setAsMine(){
             this.hasMine = 1;
+        }
+
+        public void unSetAsMine(){
+            this.hasMine = 0;
         }
 
         public void flag(){

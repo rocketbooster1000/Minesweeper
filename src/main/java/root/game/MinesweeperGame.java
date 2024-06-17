@@ -1,29 +1,29 @@
 package root.game;
 
-import root.common.Board;
 import root.common.InOut;
 
 public class MinesweeperGame {
     private enum GameStatus{
         WON,
         LOST,
+        FIRST_MOVE,
         ONGOING
     }
 
-    private Board board;
+    private MinesweeperBoard board;
 
     private InOut io;
 
     private GameStatus status;
 
-    public MinesweeperGame(Board board, InOut io){
+    public MinesweeperGame(MinesweeperBoard board, InOut io){
         this.board = board;
         this.io = io;
     }
 
     public void runGame(){
         newGame();
-        while (status == GameStatus.ONGOING){
+        while (status == GameStatus.ONGOING || status == GameStatus.FIRST_MOVE){
             move();
             board.display();
         }
@@ -33,15 +33,21 @@ public class MinesweeperGame {
     }
 
     public void newGame(){
-        board.regenerate();
+        board.initialize();
         board.display();
-        status = GameStatus.ONGOING;
+        status = GameStatus.FIRST_MOVE;
     }
 
     public void move(){
         int[] tile = io.moveLocation();
         switch (io.move()) {
             case BREAK:
+                if (status == GameStatus.FIRST_MOVE) {
+                    System.out.println("hi");
+                    board.generateMines(tile[0], tile[1]);
+                    status = GameStatus.ONGOING;
+                }
+
                 if (board.breakTile(tile[0], tile[1])) status = GameStatus.LOST;
                 else if (board.isWon()) status = GameStatus.WON;
                 break;
@@ -55,7 +61,7 @@ public class MinesweeperGame {
     private void endGame(){
         switch (status){
             case WON:
-                board.gameEndWIn();
+                board.gameEndWin();
                 break;
             case LOST:
                 board.gameEndLoose();
