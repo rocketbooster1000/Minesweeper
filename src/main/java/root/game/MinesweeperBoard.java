@@ -57,7 +57,10 @@ public abstract class MinesweeperBoard {
                 if (board[i][j].getMines() == 1 || (i == nRow && j == nCol)) continue;
                 board[i][j].setAsMine();
                 setMineNeighbors();
-                if (board[i][j].getMineNeighbors() > 0) continue;
+                if (board[nRow][nCol].getMineNeighbors() > 0) {
+                    board[i][j].unSetAsMine();
+                    continue;
+                }
                 break;
             }
         }
@@ -99,18 +102,17 @@ public abstract class MinesweeperBoard {
 
         board[r][c].reveal();
         if (board[r][c].getMineNeighbors() == 0){
-            for (int i = -1; i < 2; i++){
-                int ri = r + i;
-                if (ri >= 0 && ri < MAX_ROW
-                    && board[ri][c].getMines() == 0)
-                    breakTile(ri, c);
-            }
-            
-            for (int j = -1; j < 2; j++){
-                int cj = c + j;
-                if (cj >= 0 && cj < MAX_COL
-                    && board[r][cj].getMines() == 0)
-                    breakTile(r, cj);
+            for (int rx = -1; rx < 2; rx ++){
+                for (int cx = -1; cx < 2; cx++){
+                    int ri = rx + r;
+                    int ci = cx + c;
+                    if (ri >= 0 && ri < MAX_ROW
+                            && ci >= 0 && ci < MAX_COL
+                            && !(ri == r && ci == c)
+                            && board[ri][ci].getMines() == 0){
+                                breakTile(ri, ci);
+                            }
+                }
             }
         }
         return false;

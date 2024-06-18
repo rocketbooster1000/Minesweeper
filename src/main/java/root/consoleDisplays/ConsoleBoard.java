@@ -40,7 +40,29 @@ public class ConsoleBoard extends MinesweeperBoard{
 
     @Override
     public void gameEndLoose() {
-        display();
+        System.out.print("    ");
+        for (int i = 0; i < MAX_COL; i++)
+            System.out.print(i + "  ");
+
+        System.out.println();
+        System.out.println("---------------------------------");
+        int row = 0;
+        for (Tile[] tiles : this.board){
+            System.out.print(row + " | ");
+            row++;
+            for (Tile t : tiles){
+                if (t.getMines() > 0){
+                    System.out.print("o");
+                } else if (t.getMineNeighbors() > 0){
+                    System.out.print(t.getMineNeighbors());
+                } else {
+                    System.out.print(" ");
+                }
+                System.out.print("  ");
+            }
+            System.out.println();
+        }
+        System.out.println("---------------------------------");
         System.out.println("You lost");
     }
 
