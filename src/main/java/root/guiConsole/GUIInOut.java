@@ -34,10 +34,11 @@ public class GUIInOut implements InOut{
     }
         
     private int getInt(String prompt){
+        String str = InputOutput.getInstance().getString(prompt);
         try {
-            return InputOutput.getInstance().getInt(prompt);
-        } catch (InputMismatchException e){
-            InputOutput.getInstance().cout("Invalid Option");
+            return Integer.parseInt(str);
+        } catch (Exception e){
+            InputOutput.getInstance().coutln("Invalid Option");
             return getInt(prompt);
         }
     }
