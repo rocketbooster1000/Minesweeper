@@ -3,5 +3,7 @@
         "src\\main\\java"
     ],
     "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": []
+    "java.project.referencedLibraries": [
+        "lib/APClassesX.jar"
+    ]
 }

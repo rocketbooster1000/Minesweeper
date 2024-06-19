@@ -12,6 +12,7 @@ public class ConsoleInOut implements InOut{
     public MoveType move() {
         System.out.println("Flag or Break (f/b):");
         String str = scanner.nextLine();
+        System.out.println(str);
         if (str.equals("f")){
             return MoveType.FLAG;
         } else if (str.equals("b")){
