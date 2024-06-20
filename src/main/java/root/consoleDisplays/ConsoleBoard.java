@@ -7,7 +7,7 @@ public class ConsoleBoard extends MinesweeperBoard{
     @Override
     public void display(){
         System.out.print("    ");
-        for (int i = 0; i < MAX_COL; i++)
+        for (int i = 0; i < this.numCols; i++)
             System.out.print(i + "  ");
 
         System.out.println();
@@ -41,7 +41,7 @@ public class ConsoleBoard extends MinesweeperBoard{
     @Override
     public void gameEndLoose() {
         System.out.print("    ");
-        for (int i = 0; i < MAX_COL; i++)
+        for (int i = 0; i < this.numCols; i++)
             System.out.print(i + "  ");
 
         System.out.println();

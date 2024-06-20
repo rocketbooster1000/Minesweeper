@@ -1,7 +1,5 @@
 package root.guiConsole;
 
-import java.util.InputMismatchException;
-
 import javax.swing.JOptionPane;
 
 import APClassesX.InputOutput;

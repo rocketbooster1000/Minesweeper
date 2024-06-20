@@ -40,6 +40,9 @@ public class MinesweeperGame {
 
     public void move(){
         int[] tile = io.moveLocation();
+        if (tile[0] < 0 || tile[0] > board.getRows() - 1 || tile[1] < 0 || tile[1] > board.getCols() - 1) {
+            tile = io.moveLocation();
+        }
         switch (io.move()) {
             case BREAK:
                 if (status == GameStatus.FIRST_MOVE) {

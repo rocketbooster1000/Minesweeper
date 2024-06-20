@@ -1,19 +1,32 @@
 package root.game;
 
 public abstract class MinesweeperBoard {
-    protected static final int MAX_COL = 10;
-    protected static final int MAX_ROW = 10;
+    public static final int MAX_COL = 10;
+    public static final int MAX_ROW = 10;
 
     private static final int MINES = 10;
+
+    protected int numRows;
+    protected int numCols;
+
+    public MinesweeperBoard(int r, int c){
+        this.numRows = r;
+        this.numCols = c;
+    }
+
+    public MinesweeperBoard(){
+        this.numRows = MAX_ROW;
+        this.numCols = MAX_COL;
+    }
 
     protected Tile[][] board;
 
     public void initialize(){
-        board = new Tile[MAX_ROW][MAX_COL];
+        board = new Tile[this.numRows][this.numCols];
 
         //initialize tiles
-        for (int i = 0; i < MAX_ROW; i++){
-            for (int j = 0; j < MAX_COL; j++){
+        for (int i = 0; i < this.numRows; i++){
+            for (int j = 0; j < this.numCols; j++){
                 board[i][j] = new Tile();
             }
         }
@@ -22,22 +35,22 @@ public abstract class MinesweeperBoard {
         // for (int p = 0; p < MINES; p++){
         //     int i = 0, j = 0;
         //     do {
-        //         i = (int)(MAX_ROW * Math.random());
-        //         j = (int)(MAX_COL * Math.random());
+        //         i = (int)(this.numRows * Math.random());
+        //         j = (int)(this.numCols * Math.random());
         //     } while (board[i][j].getMines() == 1);
         //     board[i][j].setAsMine();
         // }
 
         // //calculates neighbors
-        // for (int i = 0; i < MAX_ROW; i++){
-        //     for (int j = 0; j < MAX_COL; j++){
+        // for (int i = 0; i < this.numRows; i++){
+        //     for (int j = 0; j < this.numCols; j++){
         //         int mineNeighbors = 0;
         //         for (int ri = -1; ri < 2; ri++){
         //             for (int ji = -1; ji < 2; ji++){
         //                 int r = ri + i;
         //                 int c = ji + j;
-        //                 if (r >= 0 && r < MAX_ROW
-        //                     && c >= 0 && c < MAX_COL
+        //                 if (r >= 0 && r < this.numRows
+        //                     && c >= 0 && c < this.numCols
         //                     && !(r == i && c == j))
         //                     mineNeighbors += board[r][c].getMines();
         //             }
@@ -52,8 +65,8 @@ public abstract class MinesweeperBoard {
         for (int p = 0; p < MINES; p++){
             int i = 0, j = 0;
             while (true){
-                i = (int)(MAX_ROW * Math.random());
-                j = (int)(MAX_COL * Math.random());
+                i = (int)(this.numRows * Math.random());
+                j = (int)(this.numCols * Math.random());
                 if (board[i][j].getMines() == 1 || (i == nRow && j == nCol)) continue;
                 board[i][j].setAsMine();
                 setMineNeighbors();
@@ -68,15 +81,15 @@ public abstract class MinesweeperBoard {
 
     private void setMineNeighbors(){
         //calculates neighbors
-        for (int i = 0; i < MAX_ROW; i++){
-            for (int j = 0; j < MAX_COL; j++){
+        for (int i = 0; i < this.numRows; i++){
+            for (int j = 0; j < this.numCols; j++){
                 int mineNeighbors = 0;
                 for (int ri = -1; ri < 2; ri++){
                     for (int ji = -1; ji < 2; ji++){
                         int r = ri + i;
                         int c = ji + j;
-                        if (r >= 0 && r < MAX_ROW
-                            && c >= 0 && c < MAX_COL
+                        if (r >= 0 && r < this.numRows
+                            && c >= 0 && c < this.numCols
                             && !(r == i && c == j))
                             mineNeighbors += board[r][c].getMines();
                     }
@@ -106,8 +119,8 @@ public abstract class MinesweeperBoard {
                 for (int cx = -1; cx < 2; cx++){
                     int ri = rx + r;
                     int ci = cx + c;
-                    if (ri >= 0 && ri < MAX_ROW
-                            && ci >= 0 && ci < MAX_COL
+                    if (ri >= 0 && ri < this.numRows
+                            && ci >= 0 && ci < this.numCols
                             && !(ri == r && ci == c)
                             && board[ri][ci].getMines() == 0){
                                 breakTile(ri, ci);
@@ -149,6 +162,14 @@ public abstract class MinesweeperBoard {
             str += "\n\n";
         }
         return str;
+    }
+
+    public int getRows(){
+        return this.numRows;
+    }
+
+    public int getCols(){
+        return this.numCols;
     }
 
     //represents a tile on the minesweep board

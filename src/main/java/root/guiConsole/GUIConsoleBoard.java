@@ -1,7 +1,5 @@
 package root.guiConsole;
 
-import java.util.InputMismatchException;
-
 import javax.swing.JOptionPane;
 
 import APClassesX.InputOutput;
@@ -12,7 +10,7 @@ public class GUIConsoleBoard extends MinesweeperBoard{
     @Override
     public void display() {
         InputOutput.getInstance().cout("    ");
-        for (int i = 0; i < MAX_COL; i++)
+        for (int i = 0; i < this.numCols; i++)
             InputOutput.getInstance().cout(i + "  ");
 
         InputOutput.getInstance().coutln();
@@ -40,13 +38,14 @@ public class GUIConsoleBoard extends MinesweeperBoard{
     @Override
     public void gameEndWin() {
         display();
+        JOptionPane.showMessageDialog(null, "You win!", "Game Result", JOptionPane.INFORMATION_MESSAGE);
         InputOutput.getInstance().coutln("\nCongratulations, you win");
     }
 
     @Override
     public void gameEndLoose() {
         InputOutput.getInstance().cout("    ");
-        for (int i = 0; i < MAX_COL; i++)
+        for (int i = 0; i < this.numCols; i++)
             InputOutput.getInstance().cout(i + "  ");
 
         InputOutput.getInstance().coutln();
@@ -69,6 +68,7 @@ public class GUIConsoleBoard extends MinesweeperBoard{
         }
         InputOutput.getInstance().coutln("---------------------------------");
         InputOutput.getInstance().coutln("You lost\n\n\n");
+        JOptionPane.showMessageDialog(null, "You lost", "Game Result", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override

@@ -4,6 +4,7 @@
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/APClassesX.jar"
+        "lib/APClassesX.jar",
+        "lib/GUIConsole.jar"
     ]
 }

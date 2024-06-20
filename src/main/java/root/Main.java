@@ -1,7 +1,5 @@
 package root;
 
-import root.consoleDisplays.ConsoleBoard;
-import root.consoleDisplays.ConsoleInOut;
 import root.game.MinesweeperGame;
 import root.guiConsole.GUIConsoleBoard;
 import root.guiConsole.GUIInOut;
