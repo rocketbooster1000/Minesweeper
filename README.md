@@ -30,13 +30,13 @@ Finally in the main program call `new MinesweeperGame(new CustomBoard(), new Cus
 
 # Release Information
 
-## v0.1.0
+## v0.1.0 (06202024-205300)
 
 Initial release:
 - Glorified console program wrapped in a GUI
 - 10 by 10 with 10 mines (fixed)
 
-See ReadMe for instructions
+See README for instructions
 
 Download the jar from this release, or find it under the `release` folder
 
