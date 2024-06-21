@@ -1,6 +1,6 @@
 package root.game;
 
-public abstract class MinesweeperBoard {
+public abstract class MinesweeperBoard{
     public static final int MAX_COL = 10;
     public static final int MAX_ROW = 10;
 
